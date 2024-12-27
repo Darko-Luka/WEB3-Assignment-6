@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { useDispatch } from "react-redux";
-import { setPlayer } from "../../stores/playerSlice";
+import { setPlayer } from "../../../stores/playerSlice";
 
 export default function Login() {
   const [player, _setPlayer] = useState<string>("");

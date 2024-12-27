@@ -6,7 +6,7 @@ import { RootState } from "@/stores/store";
 import {
   is_finished,
   scores,
-} from "../../../../../models/src/model/yahtzee.game";
+} from "../../../../../../models/src/model/yahtzee.game";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useParams, useRouter } from "next/navigation";

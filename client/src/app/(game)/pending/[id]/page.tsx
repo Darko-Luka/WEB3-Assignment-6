@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import * as api from "../../../model/api";
+import * as api from "../../../../model/api";
 import { useCallback, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
