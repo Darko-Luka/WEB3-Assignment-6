@@ -1,8 +1,7 @@
+"use client";
+
+import Lobby from "@/components/Lobby";
+
 export default function Home() {
-  return (
-    <div>
-      <p>Kata + Fico</p>
-      <p>Simona + miha</p>
-    </div>
-  );
+  return <Lobby />;
 }

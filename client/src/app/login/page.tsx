@@ -1,14 +1,17 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useRouter, usePathname } from "next/navigation";
 import { useDispatch } from "react-redux";
-import { setPlayer } from "../stores/playerSlice";
+import { setPlayer } from "../../stores/playerSlice";
 
 export default function Login() {
   const [player, _setPlayer] = useState<string>("");
-  const navigate = useNavigate();
-  const location = useLocation();
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = pathname.split("?")[1] || "";
 
   const enabled = player !== "";
 
@@ -17,14 +20,14 @@ export default function Login() {
   const login = () => {
     dispatch(setPlayer(player));
 
-    const params = new URLSearchParams(location.search);
+    const params = new URLSearchParams(searchParams);
 
     if (params.get("game")) {
-      navigate(`/game/${params.get("game")}`);
+      router.push(`/game/${params.get("game")}`);
     } else if (params.get("pending")) {
-      navigate(`/pending/${params.get("pending")}`);
+      router.push(`/pending/${params.get("pending")}`);
     } else {
-      navigate("/");
+      router.push("/");
     }
   };
 
@@ -39,7 +42,7 @@ export default function Login() {
     <>
       <div className="flex justify-center items-center flex-col ">
         <p className="mt-2">Login</p>
-        <p className="mt-2">
+        <div className="mt-2">
           Username:
           <Input
             className="h-8 flex w-36 mt-2"
@@ -54,7 +57,7 @@ export default function Login() {
           >
             Login
           </Button>
-        </p>
+        </div>
       </div>
     </>
   );

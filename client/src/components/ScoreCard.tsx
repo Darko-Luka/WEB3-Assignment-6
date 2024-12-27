@@ -1,3 +1,5 @@
+"use client";
+
 import { score } from "../../../models/src/model/yahtzee.slots";
 import {
   die_values,

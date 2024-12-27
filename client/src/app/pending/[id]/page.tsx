@@ -1,14 +1,17 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
-import * as api from "../model/api";
+import * as api from "../../../model/api";
 import { useCallback, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
+import { useRouter, useParams } from "next/navigation";
 
 const Pending = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
+  const params = useParams();
 
-  const { id } = useParams();
+  const id: string = params.id;
   const gameId = parseInt(id ?? "0", 10);
 
   const selectPendingGames = (state: RootState) => state.pendingGames.gameList;
@@ -32,35 +35,37 @@ const Pending = () => {
 
   const join = useCallback(() => {
     if (selectedPendingGame && player && canJoin()) {
+      console.log("freza");
       api.join(selectedPendingGame, player);
     }
   }, [selectedPendingGame, player, canJoin]);
 
   useEffect(() => {
     if (!selectedPendingGame) {
+      console.log("boske");
       if (selectedOngoingGame) {
-        navigate(`/game/${gameId}`);
+        router.push(`/game/${gameId}`);
       } else {
-        navigate("/");
+        router.push("/");
       }
     }
-  }, [selectedPendingGame, selectedOngoingGame, gameId, navigate]);
+  }, [selectedPendingGame, selectedOngoingGame, gameId, router]);
 
   useEffect(() => {
     if (!player) {
-      navigate(`/login?pending=${id}`);
+      router.push(`/login?pending=${gameId}`);
     } else if (!selectedPendingGame) {
       if (selectedOngoingGame) {
-        navigate(`/game/${id}`, { replace: true });
+        router.push(`/game/${gameId}`);
       } else {
-        navigate("/", { replace: true });
+        router.push("/");
       }
     }
   }, []);
 
   return (
     <div className="space-y-2">
-      <h1>Game #{id}</h1>
+      <h1>Game #{gameId}</h1>
       <p>
         Created by: <span>{selectedPendingGame?.creator}</span>
       </p>

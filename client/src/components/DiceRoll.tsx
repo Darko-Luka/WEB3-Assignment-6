@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "./ui/button";
 import one from "../assets/1.png";
 import two from "../assets/2.png";
@@ -8,6 +10,7 @@ import six from "../assets/6.png";
 import { IndexedYahtzee } from "@/model/game";
 import { useCallback, useEffect, useState } from "react";
 import * as api from "../model/api";
+import Image from "next/image";
 
 function DiceRoll({
   game,
@@ -66,7 +69,15 @@ function DiceRoll({
       )}
       <div className="flex flex-row gap-5 ml-[64px] size-10 mt-4">
         {game.roll.map((d, index) => {
-          return <img key={index} src={imageMap[d]}></img>;
+          return (
+            <Image
+              width={100}
+              height={100}
+              alt={d + ""}
+              key={index}
+              src={imageMap[d]}
+            />
+          );
         })}
       </div>
 

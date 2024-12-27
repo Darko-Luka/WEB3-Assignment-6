@@ -1,4 +1,6 @@
-import { Link } from "react-router-dom";
+"use client";
+
+import Link from "next/link";
 import {
   upsertPendingGame,
   removePendingGame,
@@ -51,6 +53,7 @@ function Nav({ children }: { children: React.ReactNode }) {
     );
 
     const wsSubscription = wsObservable.subscribe({
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       next: (message: any) => {
         const game = JSON.parse(message.data);
         if (game.pending) {
@@ -89,7 +92,7 @@ function Nav({ children }: { children: React.ReactNode }) {
           {children}
         </div>
         <nav className="space-y-4">
-          <Link className="text-blue-500 underline" to="/">
+          <Link className="text-blue-500 underline" href="/">
             Lobby
           </Link>
           <h2 className="text-2xl">My Games</h2>
@@ -99,7 +102,7 @@ function Nav({ children }: { children: React.ReactNode }) {
               <Link
                 key={game.id}
                 className="text-blue-500 underline"
-                to={`/game/${game.id}`}
+                href={`/game/${game.id}`}
               >
                 Game #{game.id}
               </Link>
@@ -112,7 +115,7 @@ function Nav({ children }: { children: React.ReactNode }) {
               <Link
                 key={game.id}
                 className="text-blue-500 underline"
-                to={`/pending/${game.id}`}
+                href={`/pending/${game.id}`}
               >
                 Game #{game.id}
               </Link>
@@ -124,7 +127,7 @@ function Nav({ children }: { children: React.ReactNode }) {
               <Link
                 key={game.id}
                 className="text-blue-500 underline"
-                to={`/pending/${game.id}`}
+                href={`/pending/${game.id}`}
               >
                 Game #{game.id}
               </Link>

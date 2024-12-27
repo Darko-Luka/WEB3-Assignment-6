@@ -1,15 +1,22 @@
+"use client";
+
 import DiceRoll from "@/components/DiceRoll";
 import ScoreCard from "@/components/ScoreCard";
 import { RootState } from "@/stores/store";
-import { is_finished, scores } from "../../../models/src/model/yahtzee.game";
+import {
+  is_finished,
+  scores,
+} from "../../../../../models/src/model/yahtzee.game";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams, useRouter } from "next/navigation";
 
 function Game() {
-  const navigate = useNavigate();
+  const router = useRouter();
 
-  const { id } = useParams();
+  const params = useParams();
+
+  const id: string = params.id;
   const gameId = parseInt(id ?? "0", 10);
 
   const selectGameById = (gameId: number) => (state: RootState) =>
@@ -17,7 +24,7 @@ function Game() {
   const selectPlayer = (state: RootState) => state.player.player;
   const player = useSelector(selectPlayer);
 
-  const game = useSelector(selectGameById(gameId));
+  const game = useSelector(selectGameById(gameId ?? -1));
 
   const enabled = () =>
     game !== undefined && player === game.players[game.playerInTurn];
@@ -34,8 +41,8 @@ function Game() {
   };
 
   useEffect(() => {
-    if (player === undefined) navigate(`/login?game=${id}`);
-    else if (game === undefined) navigate("/");
+    if (player === undefined) router.push(`/login?game=${gameId}`);
+    else if (game === undefined) router.push("/");
   }, []);
 
   return (
@@ -43,7 +50,7 @@ function Game() {
       {game && player && (
         <div className="w-full h-full">
           <div>
-            <h1 className="text-2xl bold ml-16 mt-4">Game #{id}</h1>
+            <h1 className="text-2xl bold ml-16 mt-4">Game #{gameId}</h1>
           </div>
           <div className="flex flex-row justify-center gap-24 h-full mt-4">
             <ScoreCard game={game} player={player} enabled={enabled()} />

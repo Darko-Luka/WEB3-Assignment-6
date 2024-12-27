@@ -1,10 +1,9 @@
-import type { Metadata } from "next";
-import "./globals.css";
+"use client";
 
-export const metadata: Metadata = {
-  title: "Yahtzee",
-  description: "Ganci",
-};
+import "./globals.css";
+import { Provider } from "react-redux";
+import { store } from "@/stores/store";
+import Nav from "@/components/Nav";
 
 export default function RootLayout({
   children,
@@ -13,7 +12,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <Provider store={store}>
+          <div className="max-w-screen-2xl mx-auto bg-slate-800 h-screen">
+            <div className="bg-white">
+              <Nav>{children}</Nav>
+            </div>
+          </div>
+        </Provider>
+      </body>
     </html>
   );
 }
